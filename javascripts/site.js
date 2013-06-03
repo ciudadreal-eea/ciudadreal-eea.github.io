@@ -37,7 +37,7 @@ map.markerLayer.on('click',function(e) {
 	e.layer.bindPopup('<h3>' + feature.properties.título + '</h3><span style="font-weight:bold">Término municipal: ' + 
 			feature.properties.términomunicipal + '</span><br>' +
 			'<span style="font-weight:bold">Lugar: ' + feature.properties.lugar + '</span>' +
-			'<p><img src="' + feature.properties.foto + '" width="400"></p>', {minWidth: 400});
+			'<p><img src="' + feature.properties.fotos + '" width="400"></p>', {minWidth: 400});
 	var info = '<h2>' + feature.properties.título + '</h2>' +
 	'<p>' + feature.properties.descripción + '</p>';
 	document.getElementById('info').innerHTML = info;
