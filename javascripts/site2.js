@@ -4,7 +4,8 @@ var data_id = '0Aj7zn-PTgttkdEtSRl9FYUFlVTQ0TVpKVkFkZnlCR3c',
     features,
     features_summary,
     interaction,
-    map = L.mapbox.map('map', map_id),
+    layer = mapbox.layer().id(map_id),
+    map = mapbox.map('map', layer, null, [easey_handlers.DragHandler()]),
     a_tipo = [],
     a_agua = [],
     a_atmosfera = [],
@@ -17,11 +18,13 @@ var data_id = '0Aj7zn-PTgttkdEtSRl9FYUFlVTQ0TVpKVkFkZnlCR3c',
     a_otros = [];
 
 mmg_google_docs_spreadsheet_1(data_id, mapData);
-map.setView([39.08039479636465,-3.850912890625005],9);
-//map.setZoomRange(0, 18);
-//map.ui.attribution.add().content('<a href="http://www.ecologistasenaccion.org/rubrique52.html">Ecologistas en Acción de Ciudad Real</a>');
-// Add map leyend
-map.legendControl.addLegend(document.getElementById('legend-content').innerHTML);
+map.centerzoom({
+    lat: 39.08039479636465,
+    lon: -3.850912890625005
+}, 9);
+map.setZoomRange(0, 18);
+map.ui.attribution.add().content('<a href="http://www.ecologistasenaccion.org/rubrique52.html">Ecologistas en Acción de Ciudad Real</a>');
+
 
 // Build map
 function mapData(f) {

@@ -1,46 +1,42 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset='utf-8' />
-    <title>Mapa de agresiones ambientales de Ciudad Real</title>
-    <link href='http://api.tiles.mapbox.com/mapbox.js/v0.6.6/mapbox.css' rel='stylesheet' />
-    <link href='stylesheets/site.css' rel='stylesheet' />
-  </head>
-  <body>
-    <div id='masthead'>
-      <div id='header'>
-          <h1>Mapa de agresiones ambientales y daños a la comunidad de Ciudad Real</h1>
-      </div>
-      <div class='limiter'>
-        <!-- block for menu by type incident -->
-        <ul class='navigation clearfix'>
-          <li>AFECCIÓN</li>
-          <li><a href='#' class='active' id='all_incident_type'>Mostrar Todos</a></li>
-          <li><a id='Agua' data-layer='1' href='#'>Agua</a></li>
-          <li><a id='Atmosfera' data-layer='2' href='#'>Atmósfera</a></li>
-          <li><a id='Caminos' data-layer='3' href='#'>Caminos públicos</a></li>
-          <li><a id='Fauna' data-layer='4' href='#'>Fauna</a></li>
-          <li><a id='Flora' data-layer='5' href='#'>Flora</a></li>
-          <li><a id='Paisaje' data-layer='6' href='#'>Paisaje</a></li>
-          <li><a id='Patrimonio' data-layer='7' href='#'>Patrimonio</a></li>
-          <li><a id='Suelo' data-layer='8' href='#'>Suelo</a></li>
-          <li><a id='Otros' data-layer='9' href='#'>Otros</a></li>
-          <li><a href='#' id='arrow_show_block' class='graph views'>Gráfico</a></li>
-          <li><a href='#' id='arrow_block_inf' class='views'>Leyenda</a></li>
-        </ul>
-      </div>
-    </div>
+<head>
+<meta charset='utf-8' />
+<title>Mapa de agresiones ambientales de Ciudad Real</title>
+<script src='http://api.tiles.mapbox.com/mapbox.js/v1.0.2/mapbox.js'></script>
+<link href='http://api.tiles.mapbox.com/mapbox.js/v1.0.2/mapbox.css'
+	rel='stylesheet' />
+<link href='stylesheets/site.css' rel='stylesheet' />
+</head>
+<body>
+	<div id='masthead'>
+		<div id='header'>
+			<h1>Mapa de agresiones ambientales y daños a la comunidad de
+				Ciudad Real</h1>
+		</div>
+		<div class='limiter'>
+			<!-- block for menu by type incident -->
+			<ul id='types' class='navigation clearfix'>
+				<li>AFECCIÓN</li>
+				<li><a id='Todas' href='#' class='active'>Todas</a></li>
+				<li><a id='Agua' href='#'>Agua</a></li>
+				<li><a id='Aire' href='#'>Aire</a></li>
+				<li><a id='Caminos' href='#'>Caminos públicos</a></li>
+				<li><a id='Fauna' href='#'>Fauna</a></li>
+				<li><a id='Flora' href='#'>Flora</a></li>
+				<li><a id='Paisaje' href='#'>Paisaje</a></li>
+				<li><a id='Patrimonio' href='#'>Patrimonio</a></li>
+				<li><a id='Suelo' href='#'>Suelo</a></li>
+				<li><a id='Otras' href='#'>Otras</a></li>
+<!-- 				<li><a href='#' id='arrow_show_block' class='graph views'>Gráfico</a></li> -->
+			</ul>
+		</div>
+	</div>
 
-    <!-- Dropdown: Graph -->
-    <div class='dropdown statistic_by_month' id='all_incident_type_statistic'></div>
-    <div id='close_block_stac' class='close'> <a href='#'>&times;</a> </div>
+	<!-- Section: Map -->
+	<div class='map-container'>
 
-    <div id='close_block_inf' class='close'> <a href='#'>&times;</a></div>
-
-    <!-- Section: Map -->
-    <div class='map-container'>
-
-<!--      <div class='introduction'>
+		<!--      <div class='introduction'>
         <div class='inner'>
           <h3>Incidentes Delictivos</h3>
           <p> Actualmente en la ciudad de  Ayacucho los incidentes delictivos son  una actividad cotidiana,como sucede en cualquier otro lugar, la  Sub Gerencia de Seguridad Ciudadana encargado de la seguridad en la  ciudad de Ayacucho pone a disposición sus datos, para el conocimiento de la ciudadania, con finalidad de  prevenir  incidentes futuros en  ciertos lugares de la ciudad.</p>
@@ -48,92 +44,57 @@
           </p>
         </div>
       </div>-->
-      <div id='map'></div>
-      <!--Map leyend -->
-      <div id='legend-content' style='display: none;'>
-	<div class='my-legend'>
-	  <div class='legend-title'>Escala de gravedad</div>
-	  <div class='legend-scale'>
-	    <ul class='legend-labels'>
-	      <li><span style='background: #FFFF00; '></span>Menos grave%</li>
-	      <li><span style='background: #FFA500; '></span></li>
-	      <li><span style='background:#FF0000;'></span></li>
-	      <li><span style='background:#000000;'></span>Más grave</li>
-	    </ul>
-	  </div>
+		<div id='map'></div>
+		<div id='info'></div>
+		<!--Map leyend -->
+		<div id='legend-content' style='display: none;'>
+			<div class='my-legend'>
+				<div class='legend-title'>Escala de gravedad</div>
+				<div class='legend-scale'>
+					<ul class='legend-labels'>
+						<li><span style='background: #FFFF00;'></span>- grave</li>
+						<li><span style='background: #FFA500;'></span></li>
+						<li><span style='background: #FF0000;'></span></li>
+						<li><span style='background: #000000;'></span>+ grave</li>
+					</ul>
+				</div>
+<!-- 				<div>
+					<a href="http://www.ecologistasenaccion.org/rubrique52.html">Ecologistas en Acción de Ciudad Real</a>
+				</div>
+ -->			</div>
+		</div>
 	</div>
-      </div>
-      <style type='text/css'>
-    .my-legend .legend-title {
-      text-align: left;
-      margin-bottom: 8px;
-      font-weight: bold;
-      font-size: 90%;
-      }
-    .my-legend .legend-scale ul {
-      margin: 0;
-      padding: 0;
-      float: left;
-      list-style: none;
-      }
-    .my-legend .legend-scale ul li {
-      display: block;
-      float: left;
-      width: 50px;
-      margin-bottom: 6px;
-      text-align: center;
-      font-size: 80%;
-      list-style: none;
-      }
-    .my-legend ul.legend-labels li span {
-      display: block;
-      float: left;
-      height: 15px;
-      width: 50px;
-      }
-    .my-legend .legend-source {
-      font-size: 70%;
-      color: #999;
-      clear: both;
-      }
-    .my-legend a {
-      color: #777;
-      }
-  </style>
-    </div>
 
-    <!-- Section: Month Selection -->
-    <div class='block clearfix'>
-      <div class='limiter'>
-        <ul id='causes' class='navigation clearfix'>
-          <li>CAUSA</li>
-          <li><a id='all_causes' href='#' class='active' >Mostrar Todos</a></li>
-          <li><a id='Agricultura' data-layer='10' href='#'>Agricultura</a></li>
-          <li><a id='Caza' data-layer='11' href='#'>Caza</a></li>
-          <li><a id='Energia' data-layer='12' href='#'>Energía</a></li>
-          <li><a id='Ganaderia' data-layer='13' href='#'>Ganadería</a></li>
-          <li><a id='Mineria' data-layer='14' href='#'>Minería</a></li>
-          <li><a id='Transporte' data-layer='15' href='#'>Transporte</a></li>
-          <li><a id='Ocio' data-layer='16' href='#'>Ocio y turismo</a></li>
-          <li><a id='Urbanismo' data-layer='17' href='#'>Urbanismo</a></li>
-          <li><a id='Otros' data-layer='18' href='#'>Otros</a></li>
-        </ul>
-      </div>
-    </div>
-    
-    <!-- Section: Graph and Downloads -->
-    <div class='section'>
-      <div class='limiter clearfix'>
+	<div class='block clearfix'>
+		<div class='limiter'>
+			<ul id='causes' class='navigation clearfix'>
+				<li>CAUSA</li>
+				<li><a id='Todas_causas' href='#' class='active'>Todas</a></li>
+				<li><a id='Agricultura' data-layer='10' href='#'>Agricultura</a></li>
+				<li><a id='Caza' data-layer='11' href='#'>Caza</a></li>
+				<li><a id='Energía' data-layer='12' href='#'>Energía</a></li>
+				<li><a id='Ganadería' data-layer='13' href='#'>Ganadería</a></li>
+				<li><a id='Minería' data-layer='14' href='#'>Minería</a></li>
+				<li><a id='Transporte' data-layer='15' href='#'>Transporte</a></li>
+				<li><a id='Ocio' data-layer='16' href='#'>Ocio y turismo</a></li>
+				<li><a id='Urbanismo' data-layer='17' href='#'>Urbanismo</a></li>
+				<li><a id='Otras_causas' data-layer='18' href='#'>Otras</a></li>
+			</ul>
+		</div>
+	</div>
 
-        <!-- Graph -->
-        <div id='block_statistic' class='col col-50'>
-          <h3>Porcentaje total de incidentes</h3>
-          <div id='img_total_percentage'></div>
-          <div id='num-incident'></div>
-        </div>
+	<!-- Section: Graph and Downloads -->
+	<div class='section'>
+		<div class='limiter clearfix'>
+			<!-- Graph -->
+			<div id='block_statistic' class='col col-50'>
+				<h3>Porcentaje total de incidentes</h3>
+				<div id='img_total_percentage'></div>
+				<div id='num-incident'></div>
+			</div>
 
-        <!-- Downloads -->
-<!--        <div id='downloads' class='col col-50'>
+			<!-- Downloads -->
+			<!--        <div id='downloads' class='col col-50'>
           <a id='download_csv' title='Descarga de Datos' class='button'>Descargar CSV Datos</a>
           <p>Descargue el documento .csv que contiene todos los datos visibles en este sitio para su uso en un programa de hoja de cálculo o <a href='http://mapbox.com/tilemill'>TileMill</a>.</p>
 
@@ -141,47 +102,58 @@
           <p>Accede a  los datos visualizados en formato  JSON API para el uso en programación  de una aplicación web.</p>
         </div>-->
 
-      </div>
-    </div>
+		</div>
+	</div>
 
-    <!-- Section: Footer -->
-    <div id='footer'>
-      <div class='limiter'>
-        <a href='#opendata'>Datos Abiertos</a> | <a href='#howto'>Como desarrollar</a>
-        | Desarrollado con <a href='http://mapbox.com/' class='icon mapbox'>MapBox</a>
-      </div>
-    </div>Type name of new folder
+	<!-- Section: Footer -->
+	<div id='footer'>
+		<div class='limiter'>
+			<a href='#opendata'>Datos Abiertos</a> | <a href='#howto'>Como
+				desarrollar</a> | Desarrollado con <a href='http://mapbox.com/'
+				class='icon mapbox'>MapBox</a>
+		</div>
+	</div>
 
-    <!-- Modals -->
-    <div id='backdrop'></div>
+	<!-- Modals -->
+	<div id='backdrop'></div>
 
-    <div id='opendata' class='popover'>
-      <h2>Datos Abiertos</h2>
-      <p>Mediante la presente  aplicación Ecologistas en Acción de Ciudad Real publica como datos abiertos las principales agresiones ambientales de la provincia de Ciudad Real.
-      </p>
-    </div>
+	<div id='opendata' class='popover'>
+		<h2>Datos Abiertos</h2>
+		<p>Mediante la presente aplicación Ecologistas en Acción de Ciudad
+			Real publica como datos abiertos las principales agresiones
+			ambientales de la provincia de Ciudad Real.</p>
+	</div>
 
-    <div id='howto' class='popover'>
-      <h2>Como Desarrollar</h2>
-      <p>Para el almacenamiento  de datos se ha utilizado Google spreadsheet API, que permite acceder a una hoja de cálculo pública e importar los datos en formato json. Seguidamente estos datos son recuperados  mediante una <a href='https://github.com/mapbox/mapbox.js/blob/master/extensions/mapbox.converters.googledocs.js, '>extensión</a> de  <a href='http://mapbox.com/mapbox.js/'>mapbox.js</a>
-      </p>
-      <p>Los marcadores  sobrepuestos en el mapa fueron desarrollados mediante  <a href='http://mapbox.com/mapbox.js/'>mapbox.js</a>
-      </p>
-      <p>
-        Se puede encontrar más información en:
-        <a href='http://developmentseed.org/blog/2012/sept/13/mapping-dynamic-data-google-spreadsheet/'>
-        Mapping Dynamic Data Directly from a Google Spreadsheet</a>
-        <a href='http://mapbox.com/blog/2012-09-05-mapping-crowdsourced-locations-google-docs/'>
-        Mapping Crowdsourced Locations with MapBox and Google Docs</a>
-      </p>
-    </div>
-    <a id='close' href='#close'>&times;</a>
+	<div id='howto' class='popover'>
+		<h2>Como Desarrollar</h2>
+		<p>
+			Para el almacenamiento de datos se ha utilizado Google spreadsheet
+			API, que permite acceder a una hoja de cálculo pública e importar los
+			datos en formato json. Seguidamente estos datos son recuperados
+			mediante una <a
+				href='https://github.com/mapbox/mapbox.js/blob/master/extensions/mapbox.converters.googledocs.js, '>extensión</a>
+			de <a href='http://mapbox.com/mapbox.js/'>mapbox.js</a>
+		</p>
+		<p>
+			Los marcadores sobrepuestos en el mapa fueron desarrollados mediante
+			<a href='http://mapbox.com/mapbox.js/'>mapbox.js</a>
+		</p>
+		<p>
+			Se puede encontrar más información en: <a
+				href='http://developmentseed.org/blog/2012/sept/13/mapping-dynamic-data-google-spreadsheet/'>
+				Mapping Dynamic Data Directly from a Google Spreadsheet</a> <a
+				href='http://mapbox.com/blog/2012-09-05-mapping-crowdsourced-locations-google-docs/'>
+				Mapping Crowdsourced Locations with MapBox and Google Docs</a>
+		</p>
+	</div>
+	<a id='close' href='#close'>&times;</a>
 
-    <script src='https://www.google.com/jsapi'></script>
-    <script src='http://api.tiles.mapbox.com/mapbox.js/v0.6.6/mapbox.js'></script>
-    <script src='javascripts/jquery.min.js'></script>
-    <script src='javascripts/underscore.min.js'></script>
-    <script src='javascripts/google_docs.js'></script>
-    <script src='javascripts/site.js'></script>
-  </body>
+	<script src='https://www.google.com/jsapi'></script>
+	<script src='http://api.tiles.mapbox.com/mapbox.js/v0.6.6/mapbox.js'></script>
+	<script src='javascripts/jquery.min.js'></script>
+	<script src='javascripts/underscore.min.js'></script>
+	<script src='javascripts/google_docs.js'></script>
+	<script src='javascripts/Leaflet.fullscreen.js'></script>
+	<script src='javascripts/site.js'></script>
+</body>
 </html>

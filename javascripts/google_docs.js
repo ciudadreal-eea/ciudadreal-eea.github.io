@@ -28,12 +28,13 @@ function mmg_google_docs_spreadsheet_1(id, callback) {
         for (var i = 0; i < x.feed.entry.length; i++) {
             var entry = x.feed.entry[i];
             var feature = {
+            	type: 'Feature',
                 geometry: {
                     type: 'Point',
                     coordinates: []
                 },
                 properties: {
-		}
+                }
             };
             for (var y in entry) {
                 if (y === latfield) feature.geometry.coordinates[1] = parseFloat(entry[y].$t);

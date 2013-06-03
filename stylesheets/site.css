@@ -229,8 +229,8 @@ a {
   height:480px;
   position:absolute;
   top:0;
-  left:0;
-  width:100%;
+  left:320px;
+  right:0;
   }
   .zoomin,
   .zoomer {
@@ -255,6 +255,12 @@ a {
   .marker-popup p {
     margin:0 0 10px;
     }
+    
+#info { 
+      position:absolute; top: 0; left: 0;
+      bottom: 0; width: 280px; background: #333; color: #fff; 
+      padding:20px;
+  }
 
 .introduction {
   background:rgb(255,255,255);
@@ -422,6 +428,26 @@ a {
  .my-legend a {
       color: #777;
       }
+
+/*Fullscreen 
+-----------------------------------------*/
+.leaflet-container:-webkit-full-screen {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.leaflet-pseudo-fullscreen {
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0px !important;
+    left: 0px !important;
+    z-index:99999;
+}
+
+.leaflet-control-fullscreen a {
+    background-image: url(leaflet.fullscreen.png);
+}
 
 /*-----------------------------------
   Lil Helpers
