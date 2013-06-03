@@ -224,6 +224,7 @@ function download_data() {
     $('#download_josn').attr('href', 'https://spreadsheets.google.com/feeds/list/' + data_id + '/od6/public/values?alt=json-in-script');
 }
 
+//Filters
 $(document).ready(function () {
 
     var $typesMenu = $('#types'),
@@ -270,22 +271,13 @@ $(document).ready(function () {
 
     // get event click on menu types
     $typesMenu.find('a').click(function (e) {
-        var id_event_type = e.target.id;
+        var id_types = e.target.id;
 
-        // check is is active on menu type "Mostrar Todos "
-        if (id_event_type === 'Todas') {
+        // check if is active on menu types "Todas"
+        if (id_types === 'Todas') {
             $typesMenu.find('a').removeClass('active');
-            $('#' + id_event_type).addClass('active');
-
-            // check to enable block where statistics show a cause
-            if ($('.close_block_stac').css('display') === 'block') {
-                $('.statistic_by_month').attr('id', 'all_incident_type_statistic');
-                // draw the graphics statistic
-                drawIncidents();
-                google.setOnLoadCallback(drawIncidents);
-            }
-
-            if ($causesMenu.find('.active').attr('id') !== 'todas_causas') {
+            $('#' + id_types).addClass('active');
+            if ($causesMenu.find('.active').attr('id') !== 'Todas_causas') {
             	map.markerLayer.setFilter(function(f) {
             		return f.properties['causa'].indexOf($causesMenu.find('.active').attr('id')) !== -1;
             	});
@@ -296,7 +288,7 @@ $(document).ready(function () {
             }
         } else {
         	$typesMenu.find('a').removeClass('active');
-            $('#' + id_event_type).addClass('active');
+            $('#' + id_types).addClass('active');
             // check if is active in menu causes "Todas_causas"
             if ($causesMenu.find('.active').attr('id') == 'Todas_causas') {
                 map.markerLayer.setFilter(function(f) {

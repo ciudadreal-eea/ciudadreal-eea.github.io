@@ -83,19 +83,7 @@ function mmg_google_docs_spreadsheet_2(id, callback) {
                 properties: {                    
                     'tipo_incidente': entry['gsx$tipoincidente'].$t,
                     'cantidad_type': parseInt(entry['gsx$cantidadtype'].$t),  
-                    'cantjanuary': parseInt(entry['gsx$cantjanuary'].$t),  
-                    'cantfebruary':parseInt(entry['gsx$cantfebruary'].$t),
-                    'cantmarch':parseInt(entry['gsx$cantmarch'].$t),
-                    'cantapril':parseInt(entry['gsx$cantapril'].$t),
-                    'canmay':parseInt(entry['gsx$canmay'].$t),
-                    'cantjune':parseInt(entry['gsx$cantjune'].$t),
-                    'cantjuly':parseInt(entry['gsx$cantjuly'].$t),
-                    'cantaugust':parseInt(entry['gsx$cantaugust'].$t),
-                    'cantseptember':parseInt(entry['gsx$cantseptember'].$t),
-                    'cantoctober':parseInt(entry['gsx$cantoctober'].$t),
-                    'cantnovember':parseInt(entry['gsx$cantnovember'].$t),
-                    'cantdecember':parseInt(entry['gsx$cantdecember'].$t)   
-                }
+               }
             };
 
             features_summary.push(feature_summary);
