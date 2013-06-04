@@ -73,11 +73,9 @@ function handleQueryResponse1(response) {
   var chart = new google.visualization.PieChart(document.getElementById('causes_chart'));
   chart.draw(data, {
     title: 'Distribución de agresiones por Causa',
-    backgroundColor: 'transparent',
-    width: 600, 
-    height: 600
+    backgroundColor: 'transparent'
   });
-  document.getElementById('total').innerHTML = data.getValue(2,3);
+  document.getElementById('total').innerHTML=data.getValue(1,2);
 }
 function handleQueryResponse2(response) {
 	  if (response.isError()) {
@@ -88,9 +86,7 @@ function handleQueryResponse2(response) {
 	  var chart = new google.visualization.PieChart(document.getElementById('types_chart'));
 	  chart.draw(data, {
 	    title: 'Distribución de agresiones por Tipo',
-	    backgroundColor: 'transparent',
-	    width: 600, 
-	    height: 600
+	    backgroundColor: 'transparent'
 	  });
 	}
 google.setOnLoadCallback(drawGraph);
