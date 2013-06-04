@@ -75,7 +75,7 @@ function handleQueryResponse1(response) {
     title: 'Distribución de agresiones por Causa',
     backgroundColor: 'transparent'
   });
-  document.getElementById('total').innerHTML=data.getValue(1,2);
+  document.getElementById('total').innerHTML = data.getValue(2,3);
 }
 function handleQueryResponse2(response) {
 	  if (response.isError()) {
