@@ -10,7 +10,10 @@
 <body>
 	<div id='masthead'>
 		<div id='header'>
-			<h1>Mapa de agresiones ambientales y daños a la comunidad de Ciudad Real</h1>
+			<h1>
+				Mapa de agresiones ambientales y daños a la comunidad de Ciudad Real
+				<input type=button onClick="location.href='registration.html'" value='Registro de agresiones' value='click here' style="float: right;">
+			</h1> 
 		</div>
 		<div class='limiter'>
 			<!-- block for menu by type incident -->
@@ -89,10 +92,11 @@
 	<div class='section'>
 		<div class='limiter clearfix'>
 			<!-- Graph -->
-			<div id='block_statistic' class='col col-50'>
-				<h3>Porcentaje total de incidentes</h3>
-				<div id='img_total_percentage'></div>
-				<div id='num-incident'></div>
+			<div id='block_statistic'>
+				<h3>Estadísticas</h3>
+				<div id='types_chart'></div>
+				<div id='causes_chart'></div>
+				<div id='total'></div>
 			</div>
 
 			<!-- Downloads -->

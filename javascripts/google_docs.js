@@ -4,7 +4,7 @@ function mmg_google_docs_spreadsheet_1(id, callback) {
     }
 
     var url = 'https://spreadsheets.google.com/feeds/list/' +
-        id + '/od6/public/values?alt=json-in-script&callback=callback';
+        id + '/1/public/values?alt=json-in-script&callback=callback';
     reqwest({
         url: url,
         type: 'jsonp',
@@ -55,41 +55,4 @@ function mmg_google_docs_spreadsheet_1(id, callback) {
 
         return callback(features);
     }    
-}
-
-
-//function for get data from spreadsheet "resumen"
-
-function mmg_google_docs_spreadsheet_2(id, callback) {
-    if (typeof reqwest === 'undefined'){
-        throw 'CSV: reqwest required for mmg_csv_url';
-    }
-    var url = 'https://spreadsheets.google.com/feeds/list/' +
-        id + '/od7/public/values?alt=json-in-script&callback=callback';
-    reqwest({
-        url: url,
-        type: 'jsonp',
-        jsonpCallback: 'callback',
-        success: response,
-        error: response
-    }); 
-   
-    function response(x) {
-        var features_summary = [];
-        if (!x || !x.feed) return features_summary; 
-        for (var i = 0; i < x.feed.entry.length; i++) {                               
-            var entry = x.feed.entry[i];
-            var feature_summary = {
-                properties: {                    
-                    'tipo_incidente': entry['gsx$tipoincidente'].$t,
-                    'cantidad_type': parseInt(entry['gsx$cantidadtype'].$t),  
-               }
-            };
-
-            features_summary.push(feature_summary);
-
-        }
-
-        return callback(features_summary);
-    }
 }

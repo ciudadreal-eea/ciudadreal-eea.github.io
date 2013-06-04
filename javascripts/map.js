@@ -1,20 +1,8 @@
 var data_id = '0Aj7zn-PTgttkdEtSRl9FYUFlVTQ0TVpKVkFkZnlCR3c',
     map_id = 'ciudadreal-eea.map-j969i073',
-    markerLayer,
     features,
     features_summary,
-    interaction,
-    map = L.mapbox.map('map', map_id),
-    a_tipo = [],
-    a_agua = [],
-    a_atmosfera = [],
-    a_caminos = [],
-    a_fauna = [],
-    a_flora = [],
-    a_paisaje = [],
-    a_patrimonio = [],
-    a_suelo = [],
-    a_otros = [];
+    map = L.mapbox.map('map', map_id);
 
 mmg_google_docs_spreadsheet_1(data_id, mapData);
 map.setView([39.08039479636465,-3.850912890625005],9);
@@ -65,158 +53,50 @@ function newMarker() {
     }
 }
 
-// Get data from spreadsheet "resumen"
-mmg_google_docs_spreadsheet_2(data_id, statisticData);
 
-// function get all data from spreadsheet
-function statisticData(f) {
-    features_summary = f;
 
-    _.each(f, function (value, key) {
-        a_tipo_incidente.push(f[key].properties.tipo_incidente);
-        a_cantidad_type.push(f[key].properties.cantidad_type);
-        a_cantjanuary.push(f[key].properties.cantjanuary);
-        a_cantfebruary.push(f[key].properties.cantfebruary);
-        a_cantmarch.push(f[key].properties.cantmarch);
-        a_cantapril.push(f[key].properties.cantapril);
-        a_canmay.push(f[key].properties.canmay);
-        a_cantjune.push(f[key].properties.cantjune);
-        a_cantjuly.push(f[key].properties.cantjuly);
-        a_cantaugust.push(f[key].properties.cantseptember);
-        a_cantseptember.push(f[key].properties.cantmarch);
-        a_cantoctober.push(f[key].properties.cantoctober);
-        a_cantnovember.push(f[key].properties.cantnovember);
-        a_cantdecember.push(f[key].properties.cantdecember);
-
-    });
+//CARGA DE LIBRERÍAS PARA GRÁFICOS
+google.load('visualization', '1.0', {packages:['corechart']}); 
+//CARGA DE DATOS
+function drawGraph() {
+  var query1 = new google.visualization.Query('https://docs.google.com/spreadsheet/tq?key=0Aj7zn-PTgttkdEtSRl9FYUFlVTQ0TVpKVkFkZnlCR3c&gid=2&range=A1:B14&pub=1');
+  var query2 = new google.visualization.Query('https://docs.google.com/spreadsheet/tq?key=0Aj7zn-PTgttkdEtSRl9FYUFlVTQ0TVpKVkFkZnlCR3c&gid=4&range=A1:B10&pub=1');
+  query1.send(handleQueryResponse1);
+  query2.send(handleQueryResponse2);
 }
-
-// call the fuction from google chart API, for create main statistic box
-google.load('visualization', '1', {
-    packages: ['corechart']
-});
-google.setOnLoadCallback(draw_main_box);
-
-// function for draw the main statistic box
-function draw_main_box() {
-    var data = new google.visualization.DataTable(),
-        options = {
-            backgroundColor: 'transparent',
-            colors: ['#CB3334', '#FFCC33', '#653332', '#CC6633', '#666535', '#222222']
-        },
-        chart = new google.visualization.PieChart(document.getElementById('img_total_percentage'));
-
-    data.addColumn('string', 'Incidencias');
-    data.addColumn('number', 'Porcentaje');
-    data.addRows([
-        [a_tipo_incidente[0], parseInt(a_cantidad_type[0], 10)],
-        [a_tipo_incidente[1], parseInt(a_cantidad_type[1], 10)],
-        [a_tipo_incidente[2], parseInt(a_cantidad_type[2], 10)],
-        [a_tipo_incidente[3], parseInt(a_cantidad_type[3], 10)],
-        [a_tipo_incidente[4], parseInt(a_cantidad_type[4], 10)],
-        [a_tipo_incidente[5], parseInt(a_cantidad_type[5], 10)]
-    ]);
-
-    chart.draw(data, options);
-
-    // put the total number incident on the view
-    $('#num-incident').html('Total de incidentes registrados : ' + a_cantidad_type[6]);
+function handleQueryResponse1(response) {
+  if (response.isError()) {
+    alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+  return;
+  }
+  var data = response.getDataTable();
+  var chart = new google.visualization.PieChart(document.getElementById('causes_chart'));
+  chart.draw(data, {
+    title: 'Distribución de agresiones por Causa',
+    backgroundColor: 'transparent'
+  });
+  document.getElementById('total').innerHTML=data.getValue(1,2);
 }
+function handleQueryResponse2(response) {
+	  if (response.isError()) {
+	    alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+	  return;
+	  }
+	  var data = response.getDataTable();
+	  var chart = new google.visualization.PieChart(document.getElementById('types_chart'));
+	  chart.draw(data, {
+	    title: 'Distribución de agresiones por Tipo',
+	    backgroundColor: 'transparent'
+	  });
+	}
+google.setOnLoadCallback(drawGraph);
 
-// function to draw line for all incidents
-function drawIncidents() {
-    var data = google.visualization.arrayToDataTable([]);
-    var options = {
-        title: 'GRAFICO DE LINEA DEL TOTAL DE INCIDENCIAS',
-        hAxis: {
-            title: 'Meses',
-            titleTextStyle: {
-                color: '#404040'
-            },
-            textStyle: {
-                color: '#404040',
-                fontSize: 13
-            }
-        },
-        vAxis: {
-            title: 'Cantidad',
-            titleTextStyle: {
-                color: '#404040'
-            }
-        },
-        gridlines: {
-            color: '#404040',
-            count: 5
-        },
-        backgroundColor: 'transparent'
-    };
-    var chart = new google.visualization.LineChart(document.getElementById('all_incident_type_statistic'));
 
-    data.addColumn('string', 'Mes');
-    data.addColumn('number', 'Total');
-    data.addRows([
-        ['Enero', a_cantjanuary[6]],
-        ['Febrero', a_cantfebruary[6]],
-        ['Marzo', a_cantmarch[6]],
-        ['Abril', a_cantapril[6]],
-        ['Mayo', a_canmay[6]],
-        ['Junio', a_cantjune[6]],
-        ['Julio', a_cantjuly[6]],
-        ['Agosto', a_cantaugust[6]],
-        ['Septiembre', a_cantseptember[6]],
-        ['Octubre', a_cantoctober[6]],
-        ['Noviembre', a_cantnovember[6]]
-    ]);
 
-    chart.draw(data, options);
-}
 
-// function to draw line by type of incidents
-function draw_type_incedent(id_x, i) {
-    var data = google.visualization.arrayToDataTable([]);
-    var options = {
-        title: ' GRAFICO DE LINEA DE TIPO DE INCIDENCIA - ' + id_x.replace('_statistic', "").replace('_', " ").replace('_', " ").toUpperCase(),
-        hAxis: {
-            title: 'Meses',
-            titleTextStyle: {
-                color: '#404040'
-            },
-            textStyle: {
-                color: '#404040',
-                fontSize: 11
-            }
-        },
-        vAxis: {
-            title: 'Cantidad',
-            titleTextStyle: {
-                color: '#404040'
-            }
-        },
-        gridlines: {
-            color: '#404040',
-            count: 4
-        },
-        backgroundColor: 'transparent'
-    };
-    var chart = new google.visualization.LineChart(document.getElementById(id_x));
 
-    data.addColumn('string', 'Mes');
-    data.addColumn('number', 'Cantidad');
-    data.addRows([
-        ['Enero', a_cantjanuary[i]],
-        ['Febrero', a_cantfebruary[i]],
-        ['Marzo', a_cantmarch[i]],
-        ['Abril', a_cantapril[i]],
-        ['Mayo', a_canmay[i]],
-        ['Junio', a_cantjune[i]],
-        ['Julio', a_cantjuly[i]],
-        ['Agosto', a_cantaugust[i]],
-        ['Septiembre', a_cantseptember[i]],
-        ['Octubre', a_cantoctober[i]],
-        ['Noviembre', a_cantnovember[i]]
-    ]);
-    chart.draw(data, options);
-}
+
+
 
 // function for put href for download data
 function download_data() {
