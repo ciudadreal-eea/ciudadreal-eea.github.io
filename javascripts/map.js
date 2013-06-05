@@ -43,18 +43,6 @@ function mapData(f) {
     map.markerLayer.setGeoJSON(f);
 }
 
-function newMarker() {
-    if (window.location.hash == '#new') {
-        $('#new').fadeIn('slow');
-        window.location.hash = '';
-        window.setTimeout(function () {
-            $('#new').fadeOut('slow');
-        }, 4000);
-    }
-}
-
-
-
 //CARGA DE LIBRERÍAS PARA GRÁFICOS
 google.load('visualization', '1.0', {packages:['corechart']}); 
 //CARGA DE DATOS
@@ -73,7 +61,8 @@ function handleQueryResponse1(response) {
   var chart = new google.visualization.PieChart(document.getElementById('causes_chart'));
   chart.draw(data, {
     title: 'Distribución de agresiones por Causa',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    height: 400
   });
   document.getElementById('total').innerHTML=data.getValue(1,2);
 }
@@ -86,7 +75,8 @@ function handleQueryResponse2(response) {
 	  var chart = new google.visualization.PieChart(document.getElementById('types_chart'));
 	  chart.draw(data, {
 	    title: 'Distribución de agresiones por Tipo',
-	    backgroundColor: 'transparent'
+	    backgroundColor: 'transparent',
+	    height: 400
 	  });
 	}
 google.setOnLoadCallback(drawGraph);
