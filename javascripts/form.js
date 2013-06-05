@@ -37,13 +37,10 @@ function Valida(formulario){
     } else if ($("#entry_10").val().length==0 ) {
         alert("Introduzca la longitud de la agresión");
         return false;
+    } else if ($("#entry_3").val().length>800 ) {
+        alert("El número máximo de caracteres para la descripción breve es de 800. Puedes utilizar la descripción detallada para escribir más.");
+        return false;
     } else {
-//        $("#entry_7").attr('value', typeincidente+getdate[0]);
-//        $("#entry_8").attr('value', typeincidente+getdate[1] );
-//        $("#entry_9").attr('value',  typeincidente+getdate[2]);
-//        $("#entry_10").attr('value',  getdate[0]);
-//        $("#entry_11").attr('value',  getdate[1]);
-//        $("#entry_12").attr('value',  getdate[2]);
         return true;
     }
 
