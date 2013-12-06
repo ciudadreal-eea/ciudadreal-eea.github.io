@@ -1,5 +1,5 @@
 var data_id = '0Aj7zn-PTgttkdEtSRl9FYUFlVTQ0TVpKVkFkZnlCR3c',
-    map_id = 'ciudadreal-eea.map-j969i073',
+    map_id = 'forosocialcriptana.map-ns0xydjk',
     features,
     features_summary,
     map = L.mapbox.map('map', map_id);
