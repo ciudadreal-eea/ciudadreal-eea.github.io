@@ -1,5 +1,5 @@
 $(function () {
-    var m = mapbox.map('map', mapbox.layer().id('ciudadreal-eea.map-j969i073')),
+    var m = mapbox.map('map', mapbox.layer().id('forosocialcriptana.map-ns0xydjk')),
         point,
         _d, // Down Event
         tol = 4, // Touch Tolerance
